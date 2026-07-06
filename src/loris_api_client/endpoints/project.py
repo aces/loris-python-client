@@ -15,7 +15,7 @@ def try_get_project(api: LorisApiClient, project_name: str) -> GetProject | None
     try:
         return get_project(api, project_name)
     except HTTPError as error:
-        if error.response.status_code == 404:
+        if error.response is not None and error.response.status_code == 404:
             return None
 
         raise error

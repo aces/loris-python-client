@@ -8,10 +8,10 @@ def try_get_candidate(api: LorisApiClient, id: int | str) -> GetCandidate | None
     try:
         return get_candidate(api, id)
     except HTTPError as error:
-        if error.response.status_code == 404:
+        if error.response is not None and error.response.status_code == 404:
             return None
-        else:
-            raise error
+
+        raise error
 
 
 def get_candidate(api: LorisApiClient, id: int | str) -> GetCandidate:

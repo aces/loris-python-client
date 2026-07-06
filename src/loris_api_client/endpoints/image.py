@@ -8,10 +8,10 @@ def try_get_candidate_images(api: LorisApiClient, candidate_id: str | int, visit
     try:
         return get_candidate_images(api, candidate_id, visit_label)
     except HTTPError as error:
-        if error.response.status_code == 404:
+        if error.response is not None and error.response.status_code == 404:
             return None
-        else:
-            raise error
+
+        raise error
 
 
 def get_candidate_images(api: LorisApiClient, candidate_id: str | int, visit_label: str) -> GetImages:

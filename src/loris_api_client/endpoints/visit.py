@@ -8,10 +8,10 @@ def try_get_candidate_visit(api: LorisApiClient, cand_id: int, visit_label: str)
     try:
         return get_candidate_visit(api, cand_id, visit_label)
     except HTTPError as error:
-        if error.response.status_code == 404:
+        if error.response is not None and error.response.status_code == 404:
             return None
-        else:
-            raise error
+
+        raise error
 
 
 def get_candidate_visit(api: LorisApiClient, cand_id: int, visit_label: str) -> GetVisit:
@@ -36,5 +36,7 @@ def create_candidate_visit(
             'Project': project_name,
         })
     except HTTPError as error:
-        print(error.response.text)
+        if error.response is not None:
+            print(error.response.text)
+
         raise error
