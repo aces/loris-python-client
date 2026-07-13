@@ -22,7 +22,7 @@ class GetVisit(BaseModel):
 
     @field_validator('stages', mode='before', check_fields=True)
     @classmethod
-    def empty_dict(cls: type['GetVisit'], v: Any) -> dict[str, VisitStage]:  # ruff: ignore
+    def empty_dict(cls: type['GetVisit'], v: Any) -> dict[str, VisitStage]:
         if v == []:
             return {}
 
